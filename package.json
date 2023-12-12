@@ -1,0 +1,26 @@
+{
+  "name": "web-media-playground",
+  "version": "1.0.0",
+  "description": "a quick and barebones project to play around with web media apis",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozturkkl/web-media-playground.git"
+  },
+  "type": "module",
+  "author": "Kemal Ozturk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ozturkkl/web-media-playground/issues"
+  },
+  "homepage": "https://github.com/ozturkkl/web-media-playground#readme",
+  "dependencies": {
+    "jswebm": "^0.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

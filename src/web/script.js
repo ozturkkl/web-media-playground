@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
       mediaRecorder.ondataavailable = (e) => {
         chunkCount++;
         let a = document.createElement("a");
-        a.download = `Chunk-${chunkCount}.mp4`;
+        a.download = `Chunk-${chunkCount}`;
         a.href = URL.createObjectURL(e.data);
         a.textContent = `Chunk ${chunkCount}`;
         document.querySelector(".chunks").appendChild(a);

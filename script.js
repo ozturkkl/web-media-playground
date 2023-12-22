@@ -1,6 +1,6 @@
 const videoTypes = ["webm", "ogg", "mp4", "x-matroska"];
 const audioTypes = ["webm", "ogg", "mp3", "x-matroska"];
-const codecs = [
+const videoCodecs = [
   "should-not-be-supported",
   "vp9",
   "vp9.0",
@@ -12,6 +12,10 @@ const codecs = [
   "h.265",
   "h264",
   "h.264",
+];
+
+const audioCodecs = [
+  "should-not-be-supported",
   "opus",
   "pcm",
   "aac",
@@ -42,7 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       mediaStream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
+        // audio true if any of the audio codecs are included in the mimeType
+        audio: audioCodecs.some((codec) => mimeType.includes(codec)),
         video: mimeType.includes("video"),
       });
       mediaRecorder = new MediaRecorder(mediaStream, { mimeType });
@@ -70,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     } catch (err) {
       console.error(err);
-      stopRecording();
+      stopRecording(4000);
     }
   }
 
@@ -90,20 +95,27 @@ document.addEventListener("DOMContentLoaded", function () {
         return false;
       };
 
-    const types = [];
-    codecs.forEach((codec) => {
-      videoTypes.forEach((type) => {
-        types.push(`video/${type};codecs=${codec}`);
+    const mimeTypes = [];
+    videoTypes.forEach((videoType) => {
+      videoCodecs.forEach((videoCodec) => {
+        mimeTypes.push(`video/${videoType};codecs=${videoCodec}`);
+        audioCodecs.forEach((audioCodec) => {
+          mimeTypes.push(
+            `video/${videoType};codecs=${videoCodec},${audioCodec}`
+          );
+        });
       });
-      audioTypes.forEach((type) => {
-        types.push(`audio/${type};codecs=${codec}`);
+    });
+    audioTypes.forEach((audioType) => {
+      audioCodecs.forEach((audioCodec) => {
+        mimeTypes.push(`audio/${audioType};codecs=${audioCodec}`);
       });
     });
 
     const VideoCodecsHeader = document.createElement("h3");
     VideoCodecsHeader.textContent = "Audio Codecs";
     document.querySelector(".select-mimetype").appendChild(VideoCodecsHeader);
-    types
+    mimeTypes
       .filter((type) => !type.includes("video"))
       .forEach((type) => {
         if (MediaRecorder.isTypeSupported(type)) {
@@ -117,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const AudioCodecsHeader = document.createElement("h3");
     AudioCodecsHeader.textContent = "Video Codecs";
     document.querySelector(".select-mimetype").appendChild(AudioCodecsHeader);
-    types
+    mimeTypes
       .filter((type) => type.includes("video"))
       .forEach((type) => {
         if (MediaRecorder.isTypeSupported(type)) {

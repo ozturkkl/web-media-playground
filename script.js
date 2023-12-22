@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       mediaRecorder = new MediaRecorder(mediaStream, { mimeType });
 
-      mediaRecorder.start();
+      mediaRecorder.start(4000);
       countdownElement.textContent = countdown;
 
       recordingInterval = setInterval(() => {
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
     } catch (err) {
       console.error(err);
-      stopRecording(4000);
+      stopRecording();
     }
   }
 

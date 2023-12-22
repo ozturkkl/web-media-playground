@@ -4,7 +4,7 @@
   "description": "a quick and barebones project to play around with web media apis",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/ozturkkl/web-media-playground#readme",
   "dependencies": {
-    "jswebm": "^0.1.2"
+    "ebml": "^3.0.0",
+    "ebml-stream": "^1.0.3",
+    "jswebm": "^0.1.2",
+    "mkvdemuxjs": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
